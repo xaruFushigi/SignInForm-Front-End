@@ -1,10 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const SignInForm = () => {
+const SignInForm = (props) => {
+
+    const [signInEmailInput, setSignInEmailInput]       = useState("");
+    const [signInPasswordInput, setSignInPasswordInput] = useState("");
+    //get email input
+    const onEmailChange = (event) => {setSignInEmailInput(event.target.value)};
+    //get password input
+    const onPasswordChange = (event) => {setSignInPasswordInput(event.target.value)};
+    //Sign In button press function
+    const onSignInButtonPress = (event) => {
+        //to prevent refresh of the webpage
+        event.preventDefault();
+        //connecting to back-end server to fetch data from database
+        fetch("http://localhost:3050/signin", {
+            method  : 'post',
+            headers : {'Content-Type' : 'application/json'},
+            body    : JSON.stringify({
+                email    : signInEmailInput.trim(),
+                password : signInPasswordInput.trim() 
+            })
+        })
+        .then((response) => {
+            if(response.ok) {
+                return response.json();
+            }
+            else {
+                throw new Error ('Network response was not ok');
+            }
+        })
+        .then((user) => {
+            if(user.id) {
+                props.loadUsersDataFromDatabase(user);
+                props.SignInPageConditionChangeFunction();
+            };
+        })
+        .catch((error) => {
+            console.log("error message is: ", error);
+        })
+    };
+  
     return(
         <div>
             <main className="pa4 black-80">
-                <form className="measure center">
+                <form className="measure center" onSubmit={onSignInButtonPress} >
 
                     <fieldset
                         id="sign_up"
@@ -19,7 +58,7 @@ const SignInForm = () => {
                             {/* Email lable */}
                             <label
                                 className="db fw6 lh-copy f6"
-                                for="email-address"
+                                htmlFor="email-address"
                             >
                                 Email   
                             </label>
@@ -27,8 +66,9 @@ const SignInForm = () => {
                             <input      
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                                 type="email"
-                                name="email-address"
+                                name="email"
                                 id="email-address"
+                                onChange={onEmailChange}
                             />      
                         </div>
 
@@ -36,7 +76,7 @@ const SignInForm = () => {
                                 {/* Password lable */}
                             <label
                                 className="db fw6 lh-copy f6"
-                                for="password"
+                                htmlFor="password"
                             >
                             Password
                             </label>
@@ -46,6 +86,7 @@ const SignInForm = () => {
                                 type="password"
                                 name="password"
                                 id="password"
+                                onChange={onPasswordChange}
                             />
                         </div>
                             {/* Remember me checkbox */}
@@ -70,6 +111,7 @@ const SignInForm = () => {
                         <a
                             href="#0"
                             className="f6 link dim black db"
+                            onClick={props.SignUpPageConditionChangeFunction}
                         >
                             Sign up
                         </a>
