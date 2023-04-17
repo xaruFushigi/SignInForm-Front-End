@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 
 const SignInForm = (props) => {
-
+    
     const [signInEmailInput, setSignInEmailInput]       = useState("");
     const [signInPasswordInput, setSignInPasswordInput] = useState("");
+    const [getUserName, setGetUserName] = useState(null);
     //get email input
     const onEmailChange = (event) => {setSignInEmailInput(event.target.value)};
     //get password input
@@ -17,8 +18,8 @@ const SignInForm = (props) => {
             method  : 'post',
             headers : {'Content-Type' : 'application/json'},
             body    : JSON.stringify({
-                email    : signInEmailInput.trim(),
-                password : signInPasswordInput.trim() 
+                email      : signInEmailInput.trim(),
+                password   : signInPasswordInput.trim()
             })
         })
         .then((response) => {
@@ -29,17 +30,19 @@ const SignInForm = (props) => {
                 throw new Error ('Network response was not ok');
             }
         })
-        .then((user) => {
-            if(user.id) {
-                props.loadUsersDataFromDatabase(user);
+        .then((data) => {
+             setGetUserName(data.user.name);
+            if(data && data.user) {
+                props.loadUsersDataFromDatabase(data);
                 props.SignInPageConditionChangeFunction();
             };
         })
         .catch((error) => {
             console.log("error message is: ", error);
+            if(error.response) error.response.text().then((text)=> console.log(text))
         })
-    };
-  
+    }; 
+   
     return(
         <div>
             <main className="pa4 black-80">
@@ -91,7 +94,7 @@ const SignInForm = (props) => {
                         </div>
                             {/* Remember me checkbox */}
                         <label className="pa0 ma0 lh-copy f6 pointer">
-                            <input type="checkbox" />
+                            <input type="checkbox"  />
                             Remember me
                         </label>
 
@@ -122,6 +125,12 @@ const SignInForm = (props) => {
                         >
                         Forgot your password?
                         </a>
+                        {
+                            getUserName  ? 
+                            <h1> Welcome Back {getUserName}</h1>
+                            :
+                            null
+                        }
                     </div>
                 </form>
             </main>

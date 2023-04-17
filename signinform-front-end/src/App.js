@@ -39,7 +39,7 @@ function App() {
   return (
     <div>
           {
-              signUpPageConditionChange === false ?
+              signInPageConditionChange === true ?
               <SignUpForm  SignUpPageConditionChangeFunction={SignUpPageConditionChangeFunction}
                            loadUsersDataFromDatabase={loadUsersDataFromDatabase} 
               />

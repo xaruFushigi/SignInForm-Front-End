@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 
 const SignUpForm = (props) => {
     const [userNameSignUpPage, setUserNameSignUpPage] = useState("");
@@ -20,22 +19,12 @@ const SignUpForm = (props) => {
 
     const onSignUpButtonPress = (event) => {
         event.preventDefault();
-        // axios({
-        //     method : 'post',
-        //     data: {
-        //         email   : emailSignUpPage,
-        //         name    : userNameSignUpPage,
-        //         password: passwordSignUpPage
-        //         },
-        //     withCredentials: true,
-        //     url: "http://localhost:3050/signup"
-        // })
-        // .then(response => {response.json()})
+
         fetch("http://localhost:3050/signup", {
             method: 'post',
             headers: {
                 Accept : 'application/json',
-                'Content-Type' : 'application/json;charset=UTF-8'
+                'Content-Type' : 'application/json'
             },
             body : JSON.stringify({
                 email   : emailSignUpPage,
@@ -80,7 +69,7 @@ const SignUpForm = (props) => {
                     </div>
                 </div>
                 <div className="tc white mt4 f6">
-                    Based on <a target="_blank" href="https://dribbble.com/shots/3150554-Sign-Up" className="lightest-blue">this shot</a>.
+                    Based on <a target="_blank" href="https://dribbble.com/shots/3150554-Sign-Up" className="lightest-blue"  rel="noreferrer">this shot</a>.
                 </div>
             </div>
     </div>
