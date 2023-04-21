@@ -60,7 +60,7 @@ const SignUpForm = (props) => {
                                 <input name="password" type="password" className="input-reset w-100 mw-100 bn br1 pa2 bg-light-gray"  onChange={passwordSignUpPageFunction}/>
                             </div>
                             <div className="mb3 tc f6">
-                                Do you have an account? <a href="http://localhost:3000/signin" className="blue ph1">Log In Now!</a>
+                                Do you have an account? <a href="/signin" className="blue ph1">Log In Now!</a>
                             </div>
                             <div className="tc">
                                 <input type="submit" value="Sign Up" className="ttu bn pv3 ph4 f6 bg-blue white b br-pill pointer grow" onClick={onSignUpButtonPress}/>

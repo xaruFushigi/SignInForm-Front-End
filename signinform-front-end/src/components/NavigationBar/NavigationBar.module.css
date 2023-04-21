@@ -1,0 +1,28 @@
+.navigationBarWrapper {
+    width: 100vw;
+    height: 50px;
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigationBar {
+    display: flex;
+    background-color: black;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+/* removes round mark from li tag */
+.navigationBar li {
+    list-style: none;
+    cursor: pointer;
+}
+/* changes color of hyerlink/anchor to white */
+.navigationBar a {
+    color: white;
+    text-decoration: none; /* removes underline from link/anchor */
+}
