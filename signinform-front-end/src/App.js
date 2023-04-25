@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 //Routes related dependency
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Switch from "react-switch";
@@ -8,7 +8,8 @@ import {SignInForm, SignUpForm, NavigationBar, Home} from './components';
 import './App.css';
 import 'tachyons';
 import './GlobalStyles.css';
-
+import { myContext } from './Context';
+import { logOutContext } from './components/Logout/Logout';
 function App() {
   const [signInPageConditionChange, setSignInPageConditionChange] = useState('/signin'); //Sign In page condition
   const [signUpPageConditionChange, setSignUpPageConditionChange] = useState('/signup');  //Sign Up page condition
@@ -20,6 +21,8 @@ function App() {
                                                               entries: 0,
                                                               joined: ""
                                                             }); 
+  const userObject = useContext(myContext);
+  const logOutObject = useContext(logOutContext);
   //loads database from 'users' table
   const loadUsersDataFromDatabase = (usersDataFromDatabase) => {
     setDownloadUsersData({

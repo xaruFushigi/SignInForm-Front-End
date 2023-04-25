@@ -19,9 +19,7 @@ const SignInForm = (props) => {
     //
     const onCheckboxChange = (event) => {setRememberMeCheckbox(event.target.value)};
     //Google OAuth2.0 button
-    const googleLogin = () => {
-        window.open('http://localhost:3050/auth/google', '_self');
-    }
+    const googleLogin = () => {window.open('http://localhost:3050/auth/google', '_self')};
     //Sign In button press function
     const onSignInButtonPress = (event) => {
         //to prevent refresh of the webpage
@@ -45,10 +43,12 @@ const SignInForm = (props) => {
         })
         .then((data) => {
              setGetUserName(data.user.name);
+            
             if(data && data.user) {
                 console.log('inside: ', loadUsersDataFromDatabase)
                 loadUsersDataFromDatabase(data);
                 SignInPageConditionChangeFunction();
+                 console.log('Success')
                 if (rememberMeCheckbox) {
                     localStorage.setItem('user', JSON.stringify(data.user));
                 }
@@ -163,14 +163,14 @@ const SignInForm = (props) => {
                             <div className='flex flex-row items-center pr3'>
                             {/* Log in With Google */}
                                 <div className={styles.googleContainer} onClick={googleLogin} > 
-                                    <img src={GoogleLogo} width={30} />
+                                    <img alt='' src={GoogleLogo} width={30} />
                                     <p> Login with Google </p>
                                 </div>
                             </div>
                             <div className='flex flex-row items-center'>
                             {/* Log in With Twitter */}
                                 <div className={styles.twitterContainer} >
-                                    <img src={TwitterLogo} width={30} />
+                                    <img alt='' src={TwitterLogo} width={30} />
                                     <p> Login with Twitter </p>
                                 </div>
                             </div>
