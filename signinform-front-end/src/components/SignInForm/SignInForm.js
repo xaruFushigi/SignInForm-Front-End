@@ -1,6 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
+//Logos
 import GoogleLogo from './assets/GoogleLogo.jpg';
 import TwitterLogo from './assets/TwitterLogo.png';
+import GitHubLogo from './assets/GitHubLogo.jpg';
 //CSS
 import styles from './SignInForm.module.css';
 
@@ -11,7 +13,7 @@ const SignInForm = (props) => {
     const [rememberMeCheckbox, setRememberMeCheckbox]   = useState(null);
     const [getUserName, setGetUserName] = useState(false);
     //destructuring props
-    const { SignInPageConditionChangeFunction, SignUpPageConditionChangeFunction, loadUsersDataFromDatabase } = props;
+    const { loadUsersDataFromDatabase } = props;
     //get email input
     const onEmailChange = (event) => {setSignInEmailInput(event.target.value)};
     //get password input
@@ -20,6 +22,10 @@ const SignInForm = (props) => {
     const onCheckboxChange = (event) => {setRememberMeCheckbox(event.target.value)};
     //Google OAuth2.0 button
     const googleLogin = () => {window.open('http://localhost:3050/auth/google', '_self')};
+    //GitHub OAuth 2.0 button
+    const gitHubLogin = () => {window.open('http://localhost:3050/auth/github/callback', "_self")};
+    //Twitter OAuth 2.0 button
+    const twitterLogin = () => {};
     //Sign In button press function
     const onSignInButtonPress = (event) => {
         //to prevent refresh of the webpage
@@ -45,9 +51,7 @@ const SignInForm = (props) => {
              setGetUserName(data.user.name);
             
             if(data && data.user) {
-                console.log('inside: ', loadUsersDataFromDatabase)
                 loadUsersDataFromDatabase(data);
-                SignInPageConditionChangeFunction();
                  console.log('Success')
                 if (rememberMeCheckbox) {
                     localStorage.setItem('user', JSON.stringify(data.user));
@@ -160,16 +164,26 @@ const SignInForm = (props) => {
                         Forgot your password?
                         </a>
                         <div className='flex flex-row items-center'>
-                            <div className='flex flex-row items-center pr3'>
                             {/* Log in With Google */}
+                            <div className='flex flex-row items-center pr3'>
                                 <div className={styles.googleContainer} onClick={googleLogin} > 
                                     <img alt='' src={GoogleLogo} width={30} />
                                     <p> Login with Google </p>
                                 </div>
                             </div>
-                            <div className='flex flex-row items-center'>
+                            {/* Log in With Github */}
+                            <div className='flex flex-row items-center pr3'>
+                                <div className={`${styles.googleContainer} ${styles.githubContainer}`} onClick={gitHubLogin} > 
+                                    <img alt='' src={GitHubLogo} width={30} />
+                                    <p> Login with GitHub </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
                             {/* Log in With Twitter */}
-                                <div className={styles.twitterContainer} >
+                            <div className='flex flex-row items-center pr3'>
+                                <div className={styles.twitterContainer} onClick={twitterLogin} >
                                     <img alt='' src={TwitterLogo} width={30} />
                                     <p> Login with Twitter </p>
                                 </div>

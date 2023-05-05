@@ -4,15 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Context from './Context';
-import { Logout } from './components';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Logout>
+
     <Context>
       <App />
     </Context>
-    </Logout>
+
   </React.StrictMode>
 );
 

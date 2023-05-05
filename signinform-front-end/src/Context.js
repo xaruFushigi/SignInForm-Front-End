@@ -1,30 +1,35 @@
 import React, {createContext, useEffect, useState} from 'react';
-export const myContext = createContext({});
+export const myContext = createContext({isSignedIn: false});
 
-export default function Context(props) {
-    const [userObject, setUserObject] = useState(null);
+const Context = (props) => {
+ 
+    const [userObject, setUserObject] = useState(()=> ({isSignedIn: false}));
+    const [hasFetchedData, setHasFetchedData] = useState(false);
     useEffect(()=>{
-        fetch('http://localhost:3050/protected',
-            {
-                method: 'GET',
-                credentials : 'include',
-                headers : {'Content-Type': 'application/json'}
+      if (!hasFetchedData) {
+        fetch('http://localhost:3050/', {
+          method: 'GET',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' }
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data && !userObject.isSignedIn) {
+              console.log(data);
+              setUserObject(data);
+              window.location.replace('http://localhost:3000/signup')
             }
-        )
-            .then(response => { return response.json() })
-            .then(data => {
-                //if data exists
-                if(data) {
-                    setUserObject(data)
-                    console.log(data)
-                }//end of if
-            })
-            .catch(error =>{return console.log(error)})
-    },[]);
+          })
+          .catch(error => console.log(error));
+        setHasFetchedData(true);
+      }
+    }, [hasFetchedData]);
 
   return (
     <div>
       <myContext.Provider value={userObject}>{props.children}</myContext.Provider>
     </div>
   )
-}
+};
+
+export default Context;
