@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import styles from './NavigationBar.module.css';
+import Cookies  from 'js-cookie';
+import styles   from './NavigationBar.module.css';
 
 export default function NavigationBar() {
   const cacheBust = Date.now();
@@ -14,6 +14,7 @@ export default function NavigationBar() {
                   body: JSON.stringify({})
                 })        
       .then(response => {
+        Cookies.remove('session_cookie');
         console.log('Response received successfully');
         return response.json()
       })

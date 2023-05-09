@@ -32,10 +32,8 @@ const SignInForm = (props) => {
             method  : 'post',
             headers : {'Content-Type' : 'application/json'},
             body    : JSON.stringify({
-
                     email      : signInEmailInput.trim(),
                     password   : signInPasswordInput.trim()
-
             })
         })
         .then((response) => {
