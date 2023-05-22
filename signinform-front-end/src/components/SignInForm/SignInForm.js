@@ -21,30 +21,37 @@ const SignInForm = (props) => {
     const googleLogin = () => {window.open('http://localhost:3050/auth/google', '_self')};
     //GitHub OAuth 2.0 button
     const gitHubLogin = () => {window.open('http://localhost:3050/auth/github/callback', "_self")};
-    //Twitter OAuth 2.0 button
-    const twitterLogin = () => {};
-    //Sign In button press function
+    //Sign In button press function 
     const onSignInButtonPress = (event) => {
         //to prevent refresh of the webpage
         event.preventDefault();
+        // Set the remember-me checkbox value
+      //  const rememberMe = rememberMeCheckBoxClick;
         //connecting to back-end server to fetch data from database
         fetch("http://localhost:3050/signin", {
             method  : 'post',
             headers : {'Content-Type' : 'application/json'},
             body    : JSON.stringify({
                     email      : signInEmailInput.trim(),
-                    password   : signInPasswordInput.trim()
+                    password   : signInPasswordInput.trim(),
+              //      remember: rememberMe,
             })
-        })
+        })  
         .then((response) => {
             if(response.ok) { return response.json() }
             else { throw new Error ('Network response was not ok') }
         })
         .then((data) => {
-            console.log(data)
-             setGetUserName(data.user.name);
+            // if (data && data.token) {
+            //     // Store the token in localStorage
+            //     localStorage.setItem('remember_token', data.token);
+            //     // Redirect or perform any other necessary actions
+            //   }
+            //gets user name from the server and puts it on the page
+            setGetUserName(data.user.name);
             
             if(data && data.user) {
+                console.log(data);
                 loadUsersDataFromDatabase(data);
                  console.log('Success')
             };
@@ -103,11 +110,6 @@ const SignInForm = (props) => {
                                 onChange={onPasswordChange}
                             />
                         </div>
-                            {/* Remember me checkbox */}
-                        <label className="pa0 ma0 lh-copy f6 pointer">
-                            <input type="checkbox" name='remember' />
-                            Remember me
-                        </label>
 
                     </fieldset>
 
@@ -129,13 +131,6 @@ const SignInForm = (props) => {
                         >
                             Sign up
                         </a>
-                            {/* Forgot Password link */}
-                        <a
-                            href="#0"
-                            className="f6 link dim black db"
-                        >
-                        Forgot your password?
-                        </a>
                         <div className='flex flex-row items-center'>
                             {/* Log in With Google */}
                             <div className='flex flex-row items-center pr3'>
@@ -149,16 +144,6 @@ const SignInForm = (props) => {
                                 <div className={`${styles.googleContainer} ${styles.githubContainer}`} onClick={gitHubLogin} > 
                                     <img alt='' src={GitHubLogo} width={30} />
                                     <p> Login with GitHub </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            {/* Log in With Twitter */}
-                            <div className='flex flex-row items-center pr3'>
-                                <div className={styles.twitterContainer} onClick={twitterLogin} >
-                                    <img alt='' src={TwitterLogo} width={30} />
-                                    <p> Login with Twitter </p>
                                 </div>
                             </div>
                         </div>

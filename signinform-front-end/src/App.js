@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 //Routes related dependency
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 //JS file components
-import {SignInForm, SignUpForm, NavigationBar, Home} from './components';
+import {SignInForm, SignUpForm, NavigationBar, Home, UserAccount} from './components';
 //CSS file
 import './App.css';
 import 'tachyons';
@@ -34,22 +34,13 @@ function App() {
                   <BrowserRouter>
                     <NavigationBar />
                     <Routes>
-
-                    <Route
-                      path='/signup'
-                      exact
-                      element={
-                        userObject && userObject.isSignedIn ? (
-                          alert('signed in')
-                        ) : (
-                          <SignUpForm
-                            loadUsersDataFromDatabase={loadUsersDataFromDatabase}
-                          />
-                        )
-                      }
-                    />
-                    <Route path='/' element={<Home />} />
-                    <Route path='/signin' exact element={<SignInForm loadUsersDataFromDatabase={loadUsersDataFromDatabase}/>} />
+                      <Route path='/' element={<Home />} />
+                      <Route path='/signup'
+                                exact element={ userObject && userObject.isSignedIn ? ( alert('signed in')) 
+                        : (<SignUpForm loadUsersDataFromDatabase={loadUsersDataFromDatabase}/>) }
+                      />
+                      <Route path='/signin' exact element={<SignInForm loadUsersDataFromDatabase={loadUsersDataFromDatabase}/>} />
+                      <Route path='/userAccount' element={<UserAccount />} />
                     </Routes>
                   </BrowserRouter>
     </div>

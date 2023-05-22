@@ -3,3 +3,4 @@ export { default as SignUpForm } from "./SignUpForm/SignUpForm";
 export { default as NavigationBar } from "./NavigationBar/NavigationBar";
 export { default as Home } from "./Home/Home";
 export { default as Logout } from "./Logout/Logout";
+export { default as UserAccount } from "./UserAccount/UserAccount";
