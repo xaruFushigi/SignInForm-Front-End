@@ -26,7 +26,6 @@ const SignInForm = (props) => {
         //to prevent refresh of the webpage
         event.preventDefault();
         // Set the remember-me checkbox value
-      //  const rememberMe = rememberMeCheckBoxClick;
         //connecting to back-end server to fetch data from database
         fetch("http://localhost:3050/signin", {
             method  : 'post',
@@ -34,7 +33,6 @@ const SignInForm = (props) => {
             body    : JSON.stringify({
                     email      : signInEmailInput.trim(),
                     password   : signInPasswordInput.trim(),
-              //      remember: rememberMe,
             })
         })  
         .then((response) => {
@@ -42,11 +40,6 @@ const SignInForm = (props) => {
             else { throw new Error ('Network response was not ok') }
         })
         .then((data) => {
-            // if (data && data.token) {
-            //     // Store the token in localStorage
-            //     localStorage.setItem('remember_token', data.token);
-            //     // Redirect or perform any other necessary actions
-            //   }
             //gets user name from the server and puts it on the page
             setGetUserName(data.user.name);
             
