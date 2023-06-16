@@ -18,16 +18,16 @@ const SignInForm = (props) => {
     //get password input
     const onPasswordChange = (event) => {setSignInPasswordInput(event.target.value)};
     //Google OAuth2.0 button
-    const googleLogin = () => {window.open('http://localhost:3050/auth/google', '_self')};
+    const googleLogin = () => {window.open('https://signinform-back-end.onrender.com/auth/google', '_self')};
     //GitHub OAuth 2.0 button
-    const gitHubLogin = () => {window.open('http://localhost:3050/auth/github/callback', "_self")};
+    const gitHubLogin = () => {window.open('https://signinform-back-end.onrender.com/auth/github/callback', "_self")};
     //Sign In button press function 
     const onSignInButtonPress = (event) => {
         //to prevent refresh of the webpage
         event.preventDefault();
         // Set the remember-me checkbox value
         //connecting to back-end server to fetch data from database
-        fetch("http://localhost:3050/signin", {
+        fetch("https://signinform-back-end.onrender.com/signin", {
             method  : 'post',
             headers : {'Content-Type' : 'application/json'},
             body    : JSON.stringify({
