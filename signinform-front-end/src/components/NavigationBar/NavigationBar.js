@@ -6,7 +6,7 @@ import styles   from './NavigationBar.module.css';
 export default function NavigationBar() {
 
   const onPressLogOut = () => {
-    fetch(`http://localhost:3050/logout`,
+    fetch(`https://signinform-back-end.onrender.com/logout`,
                 { method: 'DELETE',
                   // credentials : 'include',
                   // headers : {'Content-Type': 'application/json'},
