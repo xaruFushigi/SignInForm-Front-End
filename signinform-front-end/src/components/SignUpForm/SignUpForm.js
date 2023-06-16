@@ -20,7 +20,7 @@ const SignUpForm = (props) => {
     const onSignUpButtonPress = (event) => {
         event.preventDefault();
 
-        fetch("http://localhost:3050/signup", {
+        fetch("https://signinform-back-end.onrender.com/signup", {
             method: 'post',
             headers: {
                 Accept : 'application/json',
