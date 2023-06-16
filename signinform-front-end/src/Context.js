@@ -7,7 +7,7 @@ const Context = (props) => {
     const [hasFetchedData, setHasFetchedData] = useState(false);
     useEffect(()=>{
       if (!hasFetchedData) {
-        fetch('http://localhost:3050/', {
+        fetch('https://signinform-back-end.onrender.com/', {
           method: 'GET',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' }
@@ -17,7 +17,7 @@ const Context = (props) => {
             if (data && !userObject.isSignedIn) {
               console.log(data);
               setUserObject(data);
-              window.location.replace('http://localhost:3000/signup')
+              window.location.replace('https://signinform-back-end.onrender.com/signup')
             }
           })
           .catch(error => console.log(error));
