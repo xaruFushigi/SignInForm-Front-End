@@ -21,11 +21,17 @@ const SignInForm = (props) => {
   } = useContext(myContext);
   //Google OAuth2.0 button
   const googleLogin = () => {
-    window.open("http://localhost:3050/auth/google", "_self");
+    window.open(
+      "https://signinform-back-end.onrender.com/auth/google",
+      "_self"
+    );
   };
   //GitHub OAuth 2.0 button
   const gitHubLogin = () => {
-    window.open("http://localhost:3050/auth/github/callback", "_self");
+    window.open(
+      "https://signinform-back-end.onrender.com/auth/github/callback",
+      "_self"
+    );
   };
   const [getUserName, setGetUserName] = useState(false);
   //destructuring props
@@ -36,19 +42,22 @@ const SignInForm = (props) => {
     //to prevent refresh of the webpage
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:3050/signin", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
-        },
-        body: JSON.stringify({
-          email: signInEmailInput.trim(),
-          password: signInPasswordInput.trim(),
-        }),
-        credentials: "include",
-        mode: "cors",
-      });
+      const response = await fetch(
+        "https://signinform-back-end.onrender.com/signin",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+          },
+          body: JSON.stringify({
+            email: signInEmailInput.trim(),
+            password: signInPasswordInput.trim(),
+          }),
+          credentials: "include",
+          mode: "cors",
+        }
+      );
       if (response.ok) {
         const data = response.json();
         if (data && data.user) {
