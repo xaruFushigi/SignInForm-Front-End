@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import styles from "./NavigationBar.module.css";
-
-export default function NavigationBar() {
+import { myContext } from "../../Context";
+export default function NavigationBar()
+  const SignInForm = (props) => {
+    const {
+      fetchCsrf,
+      csrfToken,
+      setCsrfToken,
+    } = useContext(myContext);
   const onPressLogOut = async () => {
     try {
       const response = await fetch(
