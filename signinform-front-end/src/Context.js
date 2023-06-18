@@ -22,15 +22,18 @@ const Context = (props) => {
 
   const fetchCsrf = async () => {
     try {
-      const response = await fetch("http://localhost:3050/csrf-token", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
-        },
-        mode: "cors",
-      });
+      const response = await fetch(
+        "https://signinform-back-end.onrender.com/csrf-token",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+          },
+          mode: "cors",
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         setCsrfToken(data.csrfToken);
