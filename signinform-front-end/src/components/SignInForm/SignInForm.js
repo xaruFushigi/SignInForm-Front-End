@@ -7,19 +7,18 @@ import styles from "./SignInForm.module.css";
 // Context
 import { myContext } from "../../Context";
 const SignInForm = (props) => {
-  const [signInEmailInput, setSignInEmailInput] = useState("");
-  const [signInPasswordInput, setSignInPasswordInput] = useState("");
-  const [getUserName, setGetUserName] = useState(false);
-  //destructuring props
-  const { loadUsersDataFromDatabase } = props;
-  //get email input
-  const onEmailChange = (event) => {
-    setSignInEmailInput(event.target.value);
-  };
-  //get password input
-  const onPasswordChange = (event) => {
-    setSignInPasswordInput(event.target.value);
-  };
+  const {
+    fetchCsrf,
+    csrfToken,
+    setCsrfToken,
+    isAuthenticated,
+    signInEmailInput,
+    setSignInEmailInput,
+    onEmailChange,
+    signInPasswordInput,
+    setSignInPasswordInput,
+    onPasswordChange,
+  } = useContext(myContext);
   //Google OAuth2.0 button
   const googleLogin = () => {
     window.open("http://localhost:3050/auth/google", "_self");
@@ -28,44 +27,46 @@ const SignInForm = (props) => {
   const gitHubLogin = () => {
     window.open("http://localhost:3050/auth/github/callback", "_self");
   };
+  const [getUserName, setGetUserName] = useState(false);
+  //destructuring props
+  const { loadUsersDataFromDatabase } = props;
+
   //Sign In button press function
-  const onSignInButtonPress = (event) => {
+  const onSignInButtonPress = async (event) => {
     //to prevent refresh of the webpage
     event.preventDefault();
-    // Set the remember-me checkbox value
-    //connecting to back-end server to fetch data from database
-    fetch("http://localhost:3050/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: signInEmailInput.trim(),
-        password: signInPasswordInput.trim(),
-      }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Network response was not ok");
-        }
-      })
-      .then((data) => {
-        //gets user name from the server and puts it on the page
-        setGetUserName(data.user.name);
-
+    try {
+      const response = await fetch("http://localhost:3050/signin", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
+        },
+        body: JSON.stringify({
+          email: signInEmailInput.trim(),
+          password: signInPasswordInput.trim(),
+        }),
+        credentials: "include",
+        mode: "cors",
+      });
+      if (response.ok) {
+        const data = response.json();
         if (data && data.user) {
           console.log(data);
+          setGetUserName(data.user.name);
           loadUsersDataFromDatabase(data);
+          sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
+          fetchCsrf(); // create new csrfToken after logging out
           console.log("Success");
         }
-      })
-      .catch((error) => {
-        console.log("error message is: ", error);
-        if (error.response)
-          error.response
-            .text()
-            .then((text) => console.log("catch block: ", text));
-      });
+      }
+    } catch (error) {
+      console.log("error message is: ", error);
+      if (error.response)
+        error.response
+          .text()
+          .then((text) => console.log("catch block: ", text));
+    }
   };
   return (
     <div>

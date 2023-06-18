@@ -4,33 +4,39 @@ import Cookies from "js-cookie";
 import styles from "./NavigationBar.module.css";
 
 export default function NavigationBar() {
-  const onPressLogOut = () => {
-    fetch(`https://signinform-back-end.onrender.com/logout`, {
-      method: "DELETE",
-      // credentials : 'include',
-      // headers : {'Content-Type': 'application/json'},
-      // body: JSON.stringify({})
-    })
-      .then((response) => {
+  const onPressLogOut = async () => {
+    try {
+      const response = await fetch(
+        `https://signinform-back-end.onrender.com/logout`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,
+          },
+          body: JSON.stringify({}),
+          credentials: "include",
+          mode: "cors",
+        }
+      );
+      if (response.ok) {
         if (response.ok) {
+          const data = await response.json();
+          setCsrfToken(data.csrfToken); // Update the CSRF token
+          sessionStorage.removeItem("authenticated"); //remove authneticatio nfrom session storage
+          fetchCsrf(); // create new csrfToken after logging out
           Cookies.remove("session_cookie");
-          console.log("Response received successfully");
+          console.log("Logged out successfully");
         } else {
           console.log("failed to delete cookie");
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        // If the logout was successful, redirect to the login page or execute
-        // some other client-side log out logic here
-        console.log("Logged out successfully");
-        // add a delay of 500ms before redirecting the user
         setTimeout(() => {
           window.location.href = "/signin";
         }, 500);
-      })
-      .catch((error) => console.log(error));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
