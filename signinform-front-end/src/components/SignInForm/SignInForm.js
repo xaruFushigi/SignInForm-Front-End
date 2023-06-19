@@ -10,16 +10,11 @@ const SignInForm = (props) => {
   const {
     fetchCsrf,
     csrfToken,
-    setCsrfToken,
-    isAuthenticated,
     signInEmailInput,
-    setSignInEmailInput,
     onEmailChange,
     signInPasswordInput,
-    setSignInPasswordInput,
     onPasswordChange,
   } = useContext(myContext);
-  console.log(signInEmailInput, signInPasswordInput);
   //Google OAuth2.0 button
   const googleLogin = () => {
     sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
@@ -40,9 +35,6 @@ const SignInForm = (props) => {
     );
   };
   const [getUserName, setGetUserName] = useState(false);
-  //destructuring props
-  const { loadUsersDataFromDatabase } = props;
-
   //Sign In button press function
   const onSignInButtonPress = async (event) => {
     //to prevent refresh of the webpage
@@ -68,12 +60,9 @@ const SignInForm = (props) => {
       if (response.ok) {
         const data = response.json();
         if (data && data.user) {
-          console.log(data);
           setGetUserName(data.user.name);
-          loadUsersDataFromDatabase(data);
           sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
           fetchCsrf(); // create new csrfToken after logging out
-          console.log("Success");
         }
       }
     } catch (error) {

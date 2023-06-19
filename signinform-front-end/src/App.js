@@ -39,18 +39,13 @@ function App() {
       <BrowserRouter>
         <NavigationBar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" exact element={<Home />} />
           <Route
             path="/signup"
-            exact
             element={
-              isAuthenticated ? (
-                alert("signed in")
-              ) : (
-                <SignUpForm
-                  loadUsersDataFromDatabase={loadUsersDataFromDatabase}
-                />
-              )
+              <SignUpForm
+                loadUsersDataFromDatabase={loadUsersDataFromDatabase}
+              />
             }
           />
           <Route
@@ -62,6 +57,7 @@ function App() {
               />
             }
           />
+
           <Route path="/userAccount" element={<UserAccount />} />
         </Routes>
       </BrowserRouter>
