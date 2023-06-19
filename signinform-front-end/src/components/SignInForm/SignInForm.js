@@ -21,6 +21,8 @@ const SignInForm = (props) => {
   } = useContext(myContext);
   //Google OAuth2.0 button
   const googleLogin = () => {
+    sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
+    fetchCsrf(); // create new csrfToken after logging out
     window.open(
       "https://signinform-back-end.onrender.com/auth/google",
       "_self"
@@ -28,6 +30,8 @@ const SignInForm = (props) => {
   };
   //GitHub OAuth 2.0 button
   const gitHubLogin = () => {
+    sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
+    fetchCsrf(); // create new csrfToken after logging out
     window.open(
       "https://signinform-back-end.onrender.com/auth/github/callback",
       "_self"
