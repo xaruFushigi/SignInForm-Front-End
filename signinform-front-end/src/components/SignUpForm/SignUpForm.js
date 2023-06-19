@@ -25,7 +25,6 @@ const SignUpForm = (props) => {
     fetch("https://signinform-back-end.onrender.com/signup", {
       method: "post",
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
         "X-CSRF-Token": csrfToken,
       },
