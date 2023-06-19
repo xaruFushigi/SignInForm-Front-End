@@ -19,12 +19,14 @@ const SignInForm = (props) => {
     setSignInPasswordInput,
     onPasswordChange,
   } = useContext(myContext);
+  console.log(signInEmailInput, signInPasswordInput);
   //Google OAuth2.0 button
   const googleLogin = () => {
     sessionStorage.setItem("authenticated", "true"); //set authnetication to session storage
     fetchCsrf(); // create new csrfToken after logging out
     window.open(
       "https://signinform-back-end.onrender.com/auth/google",
+      //"http://localhost:3050/auth/google",
       "_self"
     );
   };
@@ -48,6 +50,7 @@ const SignInForm = (props) => {
     try {
       const response = await fetch(
         "https://signinform-back-end.onrender.com/signin",
+        // "http://localhost:3050/signin",
         {
           method: "post",
           headers: {
