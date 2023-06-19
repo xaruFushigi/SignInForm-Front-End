@@ -23,7 +23,6 @@ function App() {
     entries: 0,
     joined: "",
   });
-  const userObject = useContext(myContext);
   //loads database from 'users' table
   const loadUsersDataFromDatabase = (usersDataFromDatabase) => {
     setDownloadUsersData({
@@ -45,7 +44,7 @@ function App() {
             path="/signup"
             exact
             element={
-              userObject && isAuthenticated ? (
+              isAuthenticated ? (
                 alert("signed in")
               ) : (
                 <SignUpForm

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 //Logos
 import GoogleLogo from "./assets/GoogleLogo.jpg";
 import GitHubLogo from "./assets/GitHubLogo.jpg";
